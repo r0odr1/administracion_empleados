@@ -19,4 +19,11 @@ public class EmployeesController : ControllerBase
     public async Task<IActionResult> GetAll() =>
         Ok(await _db.Employees.ToListAsync());
     
+    // GET: api/employees/5
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var emp = await _db.Employees.FindAsync(id);
+        return emp is null ? NotFound() : Ok(emp);
+    }
 }
