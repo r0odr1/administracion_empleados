@@ -1,0 +1,22 @@
+﻿using EmployeeApi.Data;
+using EmployeeApi.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+namespace EmployeeApi.Controllers;
+
+[Authorize]
+[ApiController]
+[Route("api/[controller]")]
+public class EmployeesController : ControllerBase
+{
+    private readonly AppDbContext _db;
+    public EmployeesController(AppDbContext db) => _db = db;
+
+    // GET: api/employees
+    [HttpGet]
+    public async Task<IActionResult> GetAll() =>
+        Ok(await _db.Employees.ToListAsync());
+    
+}
