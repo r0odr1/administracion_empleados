@@ -35,4 +35,14 @@ public class EmployeesController : ControllerBase
         await _db.SaveChangesAsync();
         return CreatedAtAction(nameof(GetById), new { id = employee.Id }, employee);
     }
+
+    // PUT: api/employees/5
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] Employee employee)
+    {
+        if (id != employee.Id) return BadRequest();
+        _db.Entry(employee).State = EntityState.Modified;
+        await _db.SaveChangesAsync();
+        return NoContent();
+    }
 }
