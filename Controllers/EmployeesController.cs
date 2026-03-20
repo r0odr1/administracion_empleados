@@ -26,4 +26,13 @@ public class EmployeesController : ControllerBase
         var emp = await _db.Employees.FindAsync(id);
         return emp is null ? NotFound() : Ok(emp);
     }
+    
+    // POST: api/employees
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] Employee employee)
+    {
+        _db.Employees.Add(employee);
+        await _db.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetById), new { id = employee.Id }, employee);
+    }
 }
