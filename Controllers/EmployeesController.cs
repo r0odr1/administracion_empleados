@@ -45,4 +45,15 @@ public class EmployeesController : ControllerBase
         await _db.SaveChangesAsync();
         return NoContent();
     }
+
+    // DELETE: api/employees/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var emp = await _db.Employees.FindAsync(id);
+        if (emp is null) return NotFound();
+        _db.Employees.Remove(emp);
+        await _db.SaveChangesAsync();
+        return NoContent();
+    }
 }
